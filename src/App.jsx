@@ -13,6 +13,10 @@ function App() {
     if (enabled) {
       window.addEventListener('pointermove', handleMove)
     }
+    // limpia el evento
+    return () => {
+      window.removeEventListener('pointermove', handleMove)
+    }
   }, [enabled])
 
   return (
@@ -22,13 +26,14 @@ function App() {
         backgroundColor: 'rgba(0,0,0,0.5)',
         border: '1px solid #fff',
         borderRadius: '50%',
-        opacity: 0.8,
+        opacity: enabled ? 0.8 : 0,
         pointerEvents: 'none',
         left: -25,
         top: -25,
         width: 50,
         height: 50,
-        transform: `translate(${position.x}px, ${position.y}px)`
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        transition: 'opacity 0.2s ease-in-out'
       }} />
       <button onClick={() => setEnabled(!enabled)}>{
         enabled ? 'Desactivar' : 'Activar '} seguir puntero
